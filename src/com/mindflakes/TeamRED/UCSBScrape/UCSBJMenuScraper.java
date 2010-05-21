@@ -6,7 +6,7 @@ import org.joda.time.DateTimeZone;
 
 import com.mindflakes.TeamRED.menuClasses.*;
 
-/** A class that 'scrapes' data from a UCSB XML Menu, creating populated MealMenu objects which can be much more easily worked with.
+/** A class that 'scrapes' (parses) data from a UCSB XML Menu, creating populated MealMenu objects which can be much more easily worked with.
  * Uses the Joda Time library for all time-based calculations and data, storing each time as the long returned by DateTime.getMillis().
  * Although there is not any error detection code implemented in the scraper, the scraper does try to estimate what each line represents
  * by creating 'columns' of similar values for word positioning and comparing each line against existing values to find its place.
