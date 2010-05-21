@@ -6,8 +6,8 @@ import com.mindflakes.TeamRED.UCSBScrape.LocalUCSBMenuFile;
 import com.mindflakes.TeamRED.UCSBScrape.RemoteUCSBMenuFile;
 import com.mindflakes.TeamRED.UCSBScrape.UCSBJMenuScraper;
 import com.mindflakes.TeamRED.UCSBScrape.UCSBMenuFile;
-import com.mindflakes.TeamRED.server.MealMenuSearchQuery;
-import com.mindflakes.TeamRED.utils.MealMenuUtil;
+import com.mindflakes.TeamRED.menuUtils.MealMenuSearchQuery;
+import com.mindflakes.TeamRED.menuUtils.MealMenuUtil;
 
 public class TestJScrape {
 	
@@ -29,9 +29,9 @@ public class TestJScrape {
 		//UCSBJMenuScraper ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK, false);
 		UCSBJMenuScraper ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.CARRILLO_THIS_WEEK, false);
 //		MealMenuSearchQuery search = new MealMenuSearchQuery(ortega.getMenus());
-		MealMenuUtil.printAll(ortega.getMenus());
-		ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK, false);
-		MealMenuUtil.printAll(ortega.getMenus());
+		//MealMenuUtil.printAll(ortega.getMenus());
+		//ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK, false);
+		//MealMenuUtil.printAll(ortega.getMenus());
 //		System.out.println("<---------SEARCH RESULTS--------->");
 //		MealMenuUtil.printAll(search.findFoodItem("\"Focaccia Sandwich\" Blackened\"").returnResults());
 //		System.out.println(new DateTime().getMillis());

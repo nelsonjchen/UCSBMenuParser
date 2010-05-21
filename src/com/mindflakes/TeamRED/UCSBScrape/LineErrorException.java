@@ -1,5 +1,4 @@
 package com.mindflakes.TeamRED.UCSBScrape;
-
 /**
  * Exception classes used to handle unexpected line errors in the UCSBJMenuScraper class.
  * @author Johan Henkens
