@@ -13,7 +13,6 @@ import org.junit.*;
 
 import com.mindflakes.TeamRED.UCSBScrape.*;
 import com.mindflakes.TeamRED.menuClasses.MealMenu;
-import com.mindflakes.TeamRED.MenuXML.*;
 
 
 public class ReaderWriterTests {
@@ -57,7 +56,6 @@ public class ReaderWriterTests {
     		after = Reader.readFile(new Scanner(file2));
     		assertTrue(equalMenus(before,after));
     	} catch (FileNotFoundException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
     }

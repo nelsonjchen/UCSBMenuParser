@@ -624,7 +624,8 @@ public class UCSBJMenuScraper {
     	return -1;
     }
     
-    private static String fixBodyOfMealTimeLineForAMPM(String inputTime){
+    @SuppressWarnings("unused")
+	private static String fixBodyOfMealTimeLineForAMPM(String inputTime){
 		if(Integer.parseInt(inputTime.substring(0,inputTime.indexOf(":")))==12){
 	    	if(inputTime.substring(inputTime.length()-2).toLowerCase().equals("pm")){
 				inputTime="12"+inputTime.substring(inputTime.indexOf(":")+1,inputTime.length()-2);
@@ -659,7 +660,8 @@ public class UCSBJMenuScraper {
     	return currentLine.substring(currentLine.indexOf("l=\"")+3,currentLine.indexOf("\"", currentLine.indexOf("l=\"")+3));
     }
     
-    private static String setLineLValue(String line, String lVal){
+    @SuppressWarnings("unused")
+	private static String setLineLValue(String line, String lVal){
     	return line = line.substring(0,line.indexOf("l=\"")+3)+lVal+
     	line.substring(line.indexOf("\"",line.indexOf("l=\"")+3));
     }
@@ -669,6 +671,7 @@ public class UCSBJMenuScraper {
     	line.substring(line.indexOf("\"",line.indexOf("l=\"")+3));
     }
     
+    @SuppressWarnings("unused")
     private static int getLineTValue(String currentLine){
     	return Integer.parseInt(getLineTString(currentLine));
     }
@@ -677,11 +680,13 @@ public class UCSBJMenuScraper {
     	return currentLine.substring(currentLine.indexOf("t=\"")+3,currentLine.indexOf("\"", currentLine.indexOf("t=\"")+3));
     }
     
+    @SuppressWarnings("unused")
     private static String setLineTValue(String line, String tVal){
     	return line = line.substring(0,line.indexOf("t=\"")+3)+tVal+
     	line.substring(line.indexOf("\"",line.indexOf("t=\"")+3));
     }
     
+    @SuppressWarnings("unused")
     private static String setLineTValue(String line, int tVal){
     	return line = line.substring(0,line.indexOf("t=\"")+3)+tVal+
     	line.substring(line.indexOf("\"",line.indexOf("t=\"")+3));
@@ -695,6 +700,7 @@ public class UCSBJMenuScraper {
     	return currentLine.substring(currentLine.indexOf("w=\"")+3,currentLine.indexOf("\"", currentLine.indexOf("w=\"")+3));
     }
     
+    @SuppressWarnings("unused")
     private static String setLineWValue(String line, String wVal){
     	return line = line.substring(0,line.indexOf("w=\"")+3)+wVal+
     	line.substring(line.indexOf("\"",line.indexOf("w=\"")+3));
@@ -713,11 +719,13 @@ public class UCSBJMenuScraper {
     	return currentLine.substring(currentLine.indexOf("h=\"")+3,currentLine.indexOf("\"", currentLine.indexOf("h=\"")+3));
     }
     
+    @SuppressWarnings("unused")
     private static String setLineHValue(String line, String hVal){
     	return line = line.substring(0,line.indexOf("h=\"")+3)+hVal+
     	line.substring(line.indexOf("\"",line.indexOf("h=\"")+3));
     }
     
+    @SuppressWarnings("unused")
     private static String setLineHValue(String line, int hVal){
     	return line = line.substring(0,line.indexOf("h=\"")+3)+hVal+
     	line.substring(line.indexOf("\"",line.indexOf("h=\"")+3));
@@ -742,6 +750,7 @@ public class UCSBJMenuScraper {
     	line.substring(line.indexOf("\"",line.indexOf("p=\"")+3));
     }
     
+    @SuppressWarnings("unused")
     private static String setLinePValue(String line, int[] pVals){
     	String pVal = "";
     	for(int a : pVals){
