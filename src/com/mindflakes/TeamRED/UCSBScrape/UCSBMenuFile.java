@@ -18,5 +18,8 @@ public abstract class UCSBMenuFile {
                     return "EOF";
                 }
 	}
+	protected void close(){
+		sc.close();
+	}
 
 }

@@ -262,6 +262,7 @@ public class UCSBJMenuScraper {
     	createMealMenusForMeal(brunches,currentCommons, dates, mealTimes[3],modDateMillis,mealNames[3]);
     	createMealMenusForMeal(lateNites,currentCommons, dates, mealTimes[4],modDateMillis,mealNames[4]);
     	checkMealMenus();
+    	file.close();
     }
     
     private void checkMealMenus(){
