@@ -421,7 +421,7 @@ public class UCSBJMenuScraper {
     				in.contains("sloppy joes") || in.contains("charburger") || 
     				in.contains("ahi") || in.contains("tuna") || 
     				in.contains("sausage") || in.contains("shrimp") || in.contains("cheeseburger")||
-    				in.contains("carnitas")) {
+    				in.contains("carnitas") || in.contains("taco pizza")) {
     			return false;
     				
 
@@ -509,7 +509,6 @@ public class UCSBJMenuScraper {
     		long startMillis = combineAndConvertToMillis(dates[i], mealTimes[0]);
     		long endMillis  = combineAndConvertToMillis(dates[i], mealTimes[1]);
     		for(int o = 0; o < venues.size();o++){
-    			venues.get(o).fixFoodItems();
     			if(venues.get(o).getFoodItems()==null||venues.get(o).getFoodItems().size()==0){
     				venues.remove(o);
     				o--;

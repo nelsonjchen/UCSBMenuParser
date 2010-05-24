@@ -10,6 +10,15 @@ import com.mindflakes.TeamRED.MenuXML.Writer;
 import com.mindflakes.TeamRED.UCSBScrape.RemoteUCSBMenuFile;
 import com.mindflakes.TeamRED.UCSBScrape.UCSBJMenuScraper;
 
+/**
+ * Main source file for the UCSBMenuParser application. It pulls
+ * live UCSB menus from online, parses them, and then saves them to the filenames below, in the savepath
+ * specified in the config file in the same directory as the executable.
+ * <br> The savepath must not have any special escapes or quotations or anything to that effect, 
+ * only the absolute path. For example, :"savepath=C:/Users/Team RED/parser/output" where output is a directory.
+ * @author Johan Henkens
+ *
+ */
 public class Parser {
 
 	/**
