@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.mindflakes.TeamRED.MenuXML.Writer;
 import com.mindflakes.TeamRED.UCSBScrape.RemoteUCSBMenuFile;
 import com.mindflakes.TeamRED.UCSBScrape.UCSBJMenuScraper;
+import com.mindflakes.TeamRED.menuClasses.MealMenu;
 
 /**
  * Main source file for the UCSBMenuParser application. It pulls
@@ -49,17 +51,19 @@ public class Parser {
 	}
 	
 	private static void parseAllMenus(File path){
-		parseMenu(path,"CarrilloThisWeek");
-		parseMenu(path,"CarrilloNextWeek");
-		parseMenu(path,"DLGThisWeek");
-		parseMenu(path,"DLGNextWeek");
-		parseMenu(path,"PortolaThisWeek");
-		parseMenu(path,"PortolaNextWeek");
-		parseMenu(path,"OrtegaThisWeek");
-		parseMenu(path,"OrtegaNextWeek");
+		ArrayList<MealMenu> menus;
+		menus = parseMenu(path,"CarrilloThisWeek");
+		menus.addAll(parseMenu(path,"CarrilloNextWeek"));
+		menus.addAll(parseMenu(path,"DLGThisWeek"));
+		menus.addAll(parseMenu(path,"DLGNextWeek"));
+		menus.addAll(parseMenu(path,"PortolaThisWeek"));
+		menus.addAll(parseMenu(path,"PortolaNextWeek"));
+		menus.addAll(parseMenu(path,"OrtegaThisWeek"));
+		menus.addAll(parseMenu(path,"OrtegaNextWeek"));
+		combineMenus(path,menus);
 	}
 	
-	private static void parseMenu(File path,String menu){
+	private static ArrayList<MealMenu> parseMenu(File path,String menu){
 		UCSBJMenuScraper scrape = null;
 		if(menu.equals("CarrilloThisWeek")){
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.CARRILLO_THIS_WEEK));
@@ -83,8 +87,18 @@ public class Parser {
 		File out = new File(path,menu+".xml");
 		try {
 			Writer.writeToStream(new PrintStream(new FileOutputStream(out)), scrape.getMenus());
+			return scrape.getMenus();
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException(e);
+		}
+	}
+	
+	private static void combineMenus(File path,ArrayList<MealMenu> menus){
+		File out = new File(path,"CombinedNextTwoWeeks.xml");
+		try {
+			Writer.writeToStream(new PrintStream(new FileOutputStream(out)),menus);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 

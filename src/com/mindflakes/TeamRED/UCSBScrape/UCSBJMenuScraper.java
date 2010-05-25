@@ -26,10 +26,10 @@ public class UCSBJMenuScraper {
 					{"1100", "1430"},
 					{"1700","2000"},
 					{"1030","1400"},
-					null};
+					{"2100","2300"}};
 			return result;
 		} else if (commonsName.contains("De La Guerra")){
-			String[][] result = {null,
+			String[][] result = {{"0715", "1000"},
 					{"1100", "1430"},
 					{"1700","2000"},
 					{"1030","1400"},
@@ -39,15 +39,15 @@ public class UCSBJMenuScraper {
 			String[][] result = {{"0715", "1045"},
 					{"1145", "1400"},
 					{"1700","2000"},
-					null,
-					null};
+					{"1030","1400"},
+					{"2100","2300"}};
 			return result;
 		} else if (commonsName.contains("Portola")){
 			String[][] result = {{"0700","1030"},
 					{"1200", "1400"},
 					{"1700","2000"},
 					{"1030","1400"},
-					null};
+					{"2100","2300"}};
 			return result;
 		}
 		throw new NullPointerException();

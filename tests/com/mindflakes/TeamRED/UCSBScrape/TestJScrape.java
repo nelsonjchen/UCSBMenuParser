@@ -9,6 +9,7 @@ import com.mindflakes.TeamRED.UCSBScrape.UCSBMenuFile;
 import com.mindflakes.TeamRED.menuUtils.MealMenuSearchQuery;
 import com.mindflakes.TeamRED.menuUtils.MealMenuUtil;
 
+@SuppressWarnings("unused")
 public class TestJScrape {
 	
 	public static void main(String[] args){
@@ -27,9 +28,9 @@ public class TestJScrape {
 		
 //		UCSBJMenuScraper ortega = new UCSBJMenuScraper("docs/Menus/ortega4.19.xml", 1);
 		//UCSBJMenuScraper ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK, false);
-		UCSBJMenuScraper ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.CARRILLO_THIS_WEEK, false);
+		UCSBJMenuScraper ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.DLG_NEXT_WEEK, false);
 //		MealMenuSearchQuery search = new MealMenuSearchQuery(ortega.getMenus());
-		//MealMenuUtil.printAll(ortega.getMenus());
+		MealMenuUtil.printAll(ortega.getMenus());
 		//ortega = new UCSBJMenuScraper(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK, false);
 		//MealMenuUtil.printAll(ortega.getMenus());
 //		System.out.println("<---------SEARCH RESULTS--------->");
