@@ -27,27 +27,12 @@ public class Parser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		File config = new File("config.cfg");
-		String  savePath = "";
-		try {
-			Scanner sc = new Scanner(config);
-			while(sc.hasNext()){
-				savePath=sc.nextLine();
-				if(savePath.startsWith("savePath=")){
-					savePath=savePath.substring(savePath.indexOf("=")+1);
-					break;
-				}
-			}
-		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException(e);
-		}
-		File path = new File(savePath);
-		if(!path.exists()){
-			if(!path.mkdirs()) System.exit(1);
-		}
-		parseAllMenus(path);
-
+		  if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
+		  File path = new File(args[0]);
+		  if(!path.exists()){
+		   if(!path.mkdirs()) System.exit(1);
+		  }
+		  parseAllMenus(path);
 	}
 	
 	private static void parseAllMenus(File path){
