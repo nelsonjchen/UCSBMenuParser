@@ -27,29 +27,15 @@ public class Parser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		File config = new File("config.cfg");
-		String  savePath = "";
-		try {
-			Scanner sc = new Scanner(config);
-			while(sc.hasNext()){
-				savePath=sc.nextLine();
-				if(savePath.startsWith("savePath=")){
-					savePath=savePath.substring(savePath.indexOf("=")+1);
-					break;
-				}
-			}
-		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException(e);
-		}
-		File path = new File(savePath);
+		if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
+		File path = new File(args[0]);
 		if(!path.exists()){
 			if(!path.mkdirs()) System.exit(1);
 		}
 		parseAllMenus(path);
 
 	}
-	
+
 	private static void parseAllMenus(File path){
 		ArrayList<MealMenu> menus;
 		menus = parseMenu(path,"CarrilloThisWeek");
@@ -62,7 +48,7 @@ public class Parser {
 		menus.addAll(parseMenu(path,"OrtegaNextWeek"));
 		combineMenus(path,menus);
 	}
-	
+
 	private static ArrayList<MealMenu> parseMenu(File path,String menu){
 		UCSBJMenuScraper scrape = null;
 		if(menu.equals("CarrilloThisWeek")){
@@ -92,7 +78,7 @@ public class Parser {
 			throw new IllegalArgumentException(e);
 		}
 	}
-	
+
 	private static void combineMenus(File path,ArrayList<MealMenu> menus){
 		File out = new File(path,"CombinedNextTwoWeeks.xml");
 		try {

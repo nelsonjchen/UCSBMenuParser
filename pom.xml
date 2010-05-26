@@ -1,17 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>UCSBMenuParser</groupId>
-  <artifactId>UCSBMenuParser</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>UCSBMenuParser</name>
-  
-  <packaging>jar</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>UCSBMenuParser</groupId>
+	<artifactId>UCSBMenuParser</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>UCSBMenuParser</name>
+
+	<packaging>jar</packaging>
 
 	<url>teamred.mindflakes.com</url>
 	<organization>
 		<name>TeamRed</name>
 	</organization>
-	
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
@@ -39,9 +40,39 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.7</version>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<!-- Used from http://stackoverflow.com/questions/1814526/problem-building-executable-jar-with-maven -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.mindflakes.TeamRED.MealParser.Parser</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Done using that code -->
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -57,10 +88,6 @@
 			<groupId>com.mindflakes.redmenu</groupId>
 			<artifactId>redmenulib</artifactId>
 			<version>0.1.0</version>
-			<scope>provided</scope>
-		</dependency>
+			</dependency>
 	</dependencies>
-	
-	
-	
 </project>
