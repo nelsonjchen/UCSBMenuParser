@@ -27,14 +27,14 @@ public class Parser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		  if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
-		  File path = new File(args[0]);
-		  if(!path.exists()){
-		   if(!path.mkdirs()) System.exit(1);
-		  }
-		  parseAllMenus(path);
+		if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
+		File path = new File(args[0]);
+		if(!path.exists()){
+			if(!path.mkdirs()) System.exit(1);
+		}
+		parseAllMenus(path);
 	}
-	
+
 	private static void parseAllMenus(File path){
 		ArrayList<MealMenu> menus;
 		menus = parseMenu(path,"CarrilloThisWeek");
@@ -47,7 +47,7 @@ public class Parser {
 		menus.addAll(parseMenu(path,"OrtegaNextWeek"));
 		combineMenus(path,menus);
 	}
-	
+
 	private static ArrayList<MealMenu> parseMenu(File path,String menu){
 		UCSBJMenuScraper scrape = null;
 		if(menu.equals("CarrilloThisWeek")){
@@ -77,7 +77,7 @@ public class Parser {
 			throw new IllegalArgumentException(e);
 		}
 	}
-	
+
 	private static void combineMenus(File path,ArrayList<MealMenu> menus){
 		File out = new File(path,"CombinedNextTwoWeeks.xml");
 		try {
