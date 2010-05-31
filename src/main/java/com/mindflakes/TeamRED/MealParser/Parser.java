@@ -1,12 +1,16 @@
 package com.mindflakes.TeamRED.MealParser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.zip.GZIPOutputStream;
 
+import com.mindflakes.TeamRED.MenuXML.Reader;
 import com.mindflakes.TeamRED.MenuXML.Writer;
 import com.mindflakes.TeamRED.UCSBScrape.RemoteUCSBMenuFile;
 import com.mindflakes.TeamRED.UCSBScrape.UCSBJMenuScraper;
@@ -72,16 +76,22 @@ public class Parser {
 		File out = new File(path,menu+".xml");
 		try {
 			Writer.writeToStream(new PrintStream(new FileOutputStream(out)), scrape.getMenus());
+			Writer.compressFile(out);
 			return scrape.getMenus();
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException(e);
 		}
+
+
 	}
+	
+
 
 	private static void combineMenus(File path,ArrayList<MealMenu> menus){
 		File out = new File(path,"CombinedNextTwoWeeks.xml");
 		try {
 			Writer.writeToStream(new PrintStream(new FileOutputStream(out)),menus);
+			Writer.compressFile(out);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
