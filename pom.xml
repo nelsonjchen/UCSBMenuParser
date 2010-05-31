@@ -88,7 +88,6 @@
 			<groupId>com.mindflakes.redmenu</groupId>
 			<artifactId>redmenulib</artifactId>
 			<version>0.1.0</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
