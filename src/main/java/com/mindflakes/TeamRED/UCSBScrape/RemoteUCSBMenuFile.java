@@ -32,6 +32,10 @@ public class RemoteUCSBMenuFile extends UCSBMenuFile {
 		}
 	}
 
+	/**
+	 * Constructs a new RemoteUCSBMenuFile with the URL object as its source.
+	 * @param url the URL object pointing to the XML file
+	 */
 	public RemoteUCSBMenuFile(URL url){
 		try{
 			sc = new Scanner(new InputStreamReader(url.openStream()));

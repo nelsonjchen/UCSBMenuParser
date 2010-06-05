@@ -31,6 +31,48 @@ public class Parser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		if(false) xmlMain(args);
+		else serializedMain(args);
+
+	}
+	
+	private static void serializedMain(String[] args){
+		if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
+		File path = new File(args[0]);
+		if(!path.exists()){
+			if(!path.mkdirs()) System.exit(1);
+		}
+		path = new File(path,"serializedMenus.sz");
+		ArrayList<MealMenu> menus;
+		UCSBJMenuScraper scrape ;
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.CARRILLO_THIS_WEEK));
+			menus = scrape.getMenus();
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK));
+			menus.addAll(scrape.getMenus());
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.DLG_THIS_WEEK));
+			menus.addAll(scrape.getMenus());
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.DLG_NEXT_WEEK));
+			menus.addAll(scrape.getMenus());
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.PORTOLA_THIS_WEEK));
+			menus.addAll(scrape.getMenus());
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.PORTOLA_NEXT_WEEK));
+			menus.addAll(scrape.getMenus());
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.ORTEGA_THIS_WEEK));
+			menus.addAll(scrape.getMenus());
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.ORTEGA_NEXT_WEEK));
+			menus.addAll(scrape.getMenus());
+
+		
+		try {
+			Writer.writeSerialized(menus, new FileOutputStream(path));
+			Writer.compressFile(path);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void xmlMain(String[] args){
 		if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
 		File path = new File(args[0]);
 		if(!path.exists()){
