@@ -408,11 +408,15 @@ public class UCSBJMenuScraper {
     	in = in.toLowerCase();
     	if (in.contains("vgt") || in.contains("vegetarian") || in.contains("vegan")) {
     		return true;
-    	}else return !isNotVgt(in);
+    	}else if(isNotVgt(in)){
+    		return true;
+    	} else{
+    		return isVeganHelper(in);
+    	}
     }
     
     private static boolean isNotVgt(String in){
-    	return !(in.contains("beef") || in.contains("chicken") || 
+    	return (in.contains("beef") || in.contains("chicken") || 
 				in.contains("pork") || in.contains("meat") || 
 				in.contains("bacon") ||
 				in.contains("fish") || in.contains("turkey") || 

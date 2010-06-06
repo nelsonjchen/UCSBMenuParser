@@ -1,16 +1,11 @@
 package com.mindflakes.TeamRED.MealParser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.zip.GZIPOutputStream;
 
-import com.mindflakes.TeamRED.MenuXML.Reader;
 import com.mindflakes.TeamRED.MenuXML.Writer;
 import com.mindflakes.TeamRED.UCSBScrape.RemoteUCSBMenuFile;
 import com.mindflakes.TeamRED.UCSBScrape.UCSBJMenuScraper;
@@ -43,32 +38,53 @@ public class Parser {
 			if(!path.mkdirs()) System.exit(1);
 		}
 		path = new File(path,"serializedMenus.sz");
-		ArrayList<MealMenu> menus;
+		ArrayList<MealMenu> menus = new ArrayList<MealMenu>();
+		ArrayList<MealMenu> tmp;
 		UCSBJMenuScraper scrape ;
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.CARRILLO_THIS_WEEK));
-			menus = scrape.getMenus();
+			tmp = scrape.getMenus();
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK));
-			menus.addAll(scrape.getMenus());
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.DLG_THIS_WEEK));
-			menus.addAll(scrape.getMenus());
+			tmp = scrape.getMenus();
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.DLG_NEXT_WEEK));
-			menus.addAll(scrape.getMenus());
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.PORTOLA_THIS_WEEK));
-			menus.addAll(scrape.getMenus());
+			tmp = scrape.getMenus();
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.PORTOLA_NEXT_WEEK));
-			menus.addAll(scrape.getMenus());
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.ORTEGA_THIS_WEEK));
-			menus.addAll(scrape.getMenus());
+			tmp = scrape.getMenus();
 			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.ORTEGA_NEXT_WEEK));
-			menus.addAll(scrape.getMenus());
-
-		
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
+					
 		try {
 			Writer.writeSerialized(menus, new FileOutputStream(path));
 			Writer.compressFile(path);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	private static void addAndCheckForDupes(ArrayList<MealMenu> to, ArrayList<MealMenu> from){
+		int toSize = to.size();
+		for(MealMenu menu:from){
+			boolean added = false;
+			for(int i = 0; i<toSize;i++){
+				if(to.get(i).getMealInterval().getStartMillis()==menu.getMealInterval().getStartMillis() &&
+						to.get(i).getMealInterval().getEndMillis()==menu.getMealInterval().getEndMillis()){
+					to.remove(i);
+					to.add(i,menu);
+					added = true;
+					break;
+				} 
+			}
+			if(!added) to.add(menu);
 		}
 	}
 	
