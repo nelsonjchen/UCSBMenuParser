@@ -378,57 +378,53 @@ public class UCSBJMenuScraper {
     
     /**
      * @author Kenneth Hwang
+     * @author Johan Henkens
      * @param in
      * @return
      */
     private static boolean isVegan(String in){
     	in = in.toLowerCase();
+		if(isNotVgt(in)) return false;
+		else return isVeganHelper(in);
+
+    }
+    
+    private static boolean isVeganHelper(String in){
     	if (in.contains("vegan")) {
     		return true;
     	} else {
-    		if (in.toLowerCase().contains("rice") && !(in.toLowerCase().contains("mexican"))) {
-    			return true;
-    		} else if (in.toLowerCase().equals("baked potato")) {
-    			return true;
-    		} else if (in.toLowerCase().equals("corn")) {
-    			return true;
-    		} else if (in.toLowerCase().equals("oatmeal")) {
-    			return true;
-    		}
-    		return false;
+    		return ((in.contains("rice") && !(in.contains("mexican")))
+    				|| in.equals("baked potato") || in.equals("corn") || in.equals("oatmeal"));
     	}
     }
+    
     /**
      * @author Kenneth Hwang
+     * @author Johan Henkens
      * @param in
      * @return
      */
     private static boolean isVgt(String in){
     	in = in.toLowerCase();
-    	if (in.contains("vgt")) {
+    	if (in.contains("vgt") || in.contains("vegetarian") || in.contains("vegan")) {
     		return true;
-    	} else if(isVegan(in)) { 
-    		return true;
-    	}	else {
-    		//meats
-    		if (in.contains("beef") || in.contains("chicken") || 
-    				in.contains("pork") || in.contains("meat") || 
-    				in.contains("bacon") || in.contains("beef") ||
-    				in.contains("fish") || in.contains("turkey") || 
-    				in.contains("ham") || in.contains("patstrami") || 
-    				in.contains("chop suey") || in.contains("clam") ||
-    				in.contains("salami") || in.contains("pepperoni") || 
-    				in.contains("sloppy joes") || in.contains("charburger") || 
-    				in.contains("ahi") || in.contains("tuna") || 
-    				in.contains("sausage") || in.contains("shrimp") || in.contains("cheeseburger")||
-    				in.contains("carnitas") || in.contains("taco pizza")) {
-    			return false;
-    				
-
-    		} else {
-    			return true;
-    		}
+    	}else {
+    		return !isNotVgt(in);
     	}
+    }
+    
+    private static boolean isNotVgt(String in){
+    	return (in.contains("beef") || in.contains("chicken") || 
+				in.contains("pork") || in.contains("meat") || 
+				in.contains("bacon") ||
+				in.contains("fish") || in.contains("turkey") || 
+				in.contains("ham") || in.contains("pastrami") || 
+				in.contains("chop suey") || in.contains("clam") ||
+				in.contains("salami") || in.contains("pepperoni") || 
+				in.contains("sloppy joes") || in.contains("charburger") || 
+				in.contains("ahi") || in.contains("tuna") || 
+				in.contains("sausage") || in.contains("shrimp") || in.contains("cheeseburger")||
+				in.contains("carnitas") || in.contains("taco pizza"));
     }
     
     private static void convertDatesToMMDDYYYY(String[] dates){

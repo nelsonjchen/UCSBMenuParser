@@ -1,16 +1,11 @@
 package com.mindflakes.TeamRED.MealParser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.zip.GZIPOutputStream;
 
-import com.mindflakes.TeamRED.MenuXML.Reader;
 import com.mindflakes.TeamRED.MenuXML.Writer;
 import com.mindflakes.TeamRED.UCSBScrape.RemoteUCSBMenuFile;
 import com.mindflakes.TeamRED.UCSBScrape.UCSBJMenuScraper;
@@ -31,6 +26,69 @@ public class Parser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		if(false) xmlMain(args);
+		else serializedMain(args);
+
+	}
+	
+	private static void serializedMain(String[] args){
+		if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
+		File path = new File(args[0]);
+		if(!path.exists()){
+			if(!path.mkdirs()) System.exit(1);
+		}
+		path = new File(path,"serializedMenus.sz");
+		ArrayList<MealMenu> menus = new ArrayList<MealMenu>();
+		ArrayList<MealMenu> tmp;
+		UCSBJMenuScraper scrape ;
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.CARRILLO_THIS_WEEK));
+			tmp = scrape.getMenus();
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.CARRILLO_NEXT_WEEK));
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.DLG_THIS_WEEK));
+			tmp = scrape.getMenus();
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.DLG_NEXT_WEEK));
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.PORTOLA_THIS_WEEK));
+			tmp = scrape.getMenus();
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.PORTOLA_NEXT_WEEK));
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.ORTEGA_THIS_WEEK));
+			tmp = scrape.getMenus();
+			scrape = new UCSBJMenuScraper(new RemoteUCSBMenuFile(RemoteUCSBMenuFile.ORTEGA_NEXT_WEEK));
+			addAndCheckForDupes(tmp,scrape.getMenus());
+			menus.addAll(tmp);
+					
+		try {
+			Writer.writeSerialized(menus, new FileOutputStream(path));
+			Writer.compressFile(path);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void addAndCheckForDupes(ArrayList<MealMenu> to, ArrayList<MealMenu> from){
+		int toSize = to.size();
+		for(MealMenu menu:from){
+			boolean added = false;
+			for(int i = 0; i<toSize;i++){
+				if(to.get(i).getMealInterval().getStartMillis()==menu.getMealInterval().getStartMillis() &&
+						to.get(i).getMealInterval().getEndMillis()==menu.getMealInterval().getEndMillis()){
+					to.remove(i);
+					to.add(i,menu);
+					added = true;
+					break;
+				} 
+			}
+			if(!added) to.add(menu);
+		}
+	}
+	
+	private static void xmlMain(String[] args){
 		if(args.length!=1) throw new IllegalArgumentException("Must be run as parser.jar \"PathnameToOutfilesDirectory\". Can be relative or absolute.");
 		File path = new File(args[0]);
 		if(!path.exists()){
